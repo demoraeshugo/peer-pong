@@ -5,9 +5,9 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/jsx-runtime",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react/jsx-runtime"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -17,5 +17,7 @@
     "sourceType": "module"
   },
   "plugins": ["react"],
-  "rules": {}
+  "rules": {
+    "no-unused-vars": 1
+  }
 }
