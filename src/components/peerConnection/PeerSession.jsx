@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 
-const PeerSession = ({ players }) => {
-  const p1 = players[0];
+import peerStore from './peerStore';
+
+const PeerSession = () => {
+  const [currentPlayers] = useState(peerStore.players);
+  const p1 = currentPlayers[0];
   const [loading, setLoading] = useState('');
 
   useEffect(() => {

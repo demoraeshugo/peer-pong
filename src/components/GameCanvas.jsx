@@ -1,8 +1,5 @@
-import { React, Suspense } from 'react';
 import PropTypes from 'prop-types';
-
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Bounds, BakeShadows } from '@react-three/drei';
 import { MeshReflectorMaterial } from '@react-three/drei';
 import { Physics, usePlane } from '@react-three/cannon';
 import { Cursor } from './helpers/Drag';
@@ -30,8 +27,7 @@ function Floor(props) {
 }
 
 // TODO: Fix so that multiple children can be passed in
-const GameCanvas = ({ children }) => {
-  console.log('GameCanvas.jsx: children: ', children);
+const GameCanvas = () => {
   return (
     <div
       style={{

@@ -1,12 +1,15 @@
 // react
-import React from 'react';
+import { Children, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // react boostrap components
 import Container from 'react-bootstrap/Container';
 
+// State provider
+import peerStore from '../components/peerConnection/peerStore';
+
 const mapChildrenToElements = (children) => {
-  return React.Children.map(children, (child) => {
+  return Children.map(children, (child) => {
     return (
       <div
         style={{
@@ -34,7 +37,8 @@ const getStyles = (connected) => {
  * The base page for all views
  * @returns {JSX}
  */
-const PageBase = ({ connected, children }) => {
+const PageBase = ({ children }) => {
+  const [connected] = useState(peerStore.connection !== null);
   return (
     <div style={getStyles(connected)}>
       <Container fluid>{mapChildrenToElements(children)}</Container>
