@@ -1,7 +1,16 @@
-const peerStore = {
-  peer: null,
-  connection: null,
-  players: []
-};
+import create from 'zustand';
 
-export default peerStore;
+const usePeerStore = create((set, get) => ({
+  id: null,
+  setId: (id) => set((state) => ({ id })),
+  peer: null,
+  setPeer: (peer) => {
+    set({ peer });
+  },
+  connection: null,
+  setConnection: (connection) => set({ connection }),
+  player: '',
+  setPlayer: (player) => set({ player })
+}));
+
+export { usePeerStore };

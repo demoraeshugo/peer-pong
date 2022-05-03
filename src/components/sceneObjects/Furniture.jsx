@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { SpotLight } from '@react-three/drei';
 import {
   useCompoundBody,
@@ -118,6 +118,7 @@ const Lamp = (props) => {
     args: [0.2],
     ...props
   }));
+
   const [lamp] = useCylinder(() => ({
     mass: 1,
     args: [0.5, 1.5, 2, 16],
@@ -126,11 +127,13 @@ const Lamp = (props) => {
     material: { friction: 0.9 },
     ...props
   }));
-  const bind = useDragConstraint(lamp);
+
+  // const bind = useDragConstraint(lamp);
   useDistanceConstraint(fixed, lamp, { distance: 2, pivotA: [0, 0, 0], pivotB: [0, 2, 0] });
   usePointToPointConstraint(fixed, lamp, { pivotA: [0, 0, 0], pivotB: [0, 2, 0] });
+
   return (
-    <mesh ref={lamp} {...bind}>
+    <mesh ref={lamp}>
       <cylinderGeometry args={[0.5, 1.5, 2, 32]} />
       <meshStandardMaterial />
       <SpotLight

@@ -1,15 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import Page from './views/Page';
-import Landing from './views/Landing';
+import ControllerView from './views/ControllerView';
+import GameView from './views/GameView';
+import GameCanvas from './components/GameCanvas';
 import './App.css';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Landing />} />
-        <Route exact path="/game" element={<Page />} />
+        <Route path="/" element={<GameView />} />
+        <Route path="game/session/:id" element={<GameView />} />
+        <Route path="controller/session/:id" element={<ControllerView />} />
+        <Route path="game/test" element={<GameCanvas />} />
       </Routes>
     </BrowserRouter>
   );

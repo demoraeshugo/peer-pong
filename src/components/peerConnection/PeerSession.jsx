@@ -1,31 +1,50 @@
 import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
+import shallow from 'zustand/shallow';
+import QRCode from 'react-qr-code';
 
-import peerStore from './peerStore';
+import { usePeerStore } from './peerStore';
 
 const PeerSession = () => {
-  const [currentPlayers] = useState(peerStore.players);
-  const p1 = currentPlayers[0];
+  const player = usePeerStore((state) => state.player);
+  const peer = usePeerStore((state) => state.peer);
+  const [connection, setConnection] = usePeerStore(
+    (state) => [state.connection, state.setConnection],
+    shallow
+  );
+  const id = usePeerStore((state) => state.id);
   const [loading, setLoading] = useState('');
 
+  const url = `${window.location.origin}/controller/session/${id}`;
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLoading(loading === '...' ? '' : loading + '.');
-    }, 500);
-    return () => clearInterval(interval);
-  }, [loading]);
+    if (!connection) {
+      const interval = setInterval(() => {
+        setLoading(loading === '...' ? '' : loading + '.');
+      }, 500);
+      return () => clearInterval(interval);
+    }
+  }, [loading, connection]);
+
+  peer.on('connection', (conn) => {
+    setConnection(conn);
+    conn.on('data', (data) => {
+      alert(data);
+    });
+  });
 
   return (
-    <Card style={{ width: '100%' }} bg="secondary">
-      <Card.Body>
-        <Card.Title>Current Session</Card.Title>
-        <Card.Text>
-          <p>{p1} is here!</p>
-          <p>Waiting for player 2 to join{loading}</p>
-        </Card.Text>
-        {/* <Button variant="primary">Go somewhere</Button> */}
-      </Card.Body>
-    </Card>
+    <>
+      {!connection ? (
+        <>
+          <h2>Current Session</h2>
+          <p>{player} is here!</p>
+          <p>Waiting for mobile connection {loading}</p>
+          <a href={url}>{url}</a>
+          <QRCode value={url} size={200} />
+        </>
+      ) : null}
+    </>
   );
 };
 

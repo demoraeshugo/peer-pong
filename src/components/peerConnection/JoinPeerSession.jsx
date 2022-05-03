@@ -1,37 +1,41 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import PeerJs from 'peerjs';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
 
-import peerStore from './peerStore';
-import PeerJs from 'peerjs';
+import { usePeerStore } from './peerStore';
+import shallow from 'zustand/shallow';
 
-const JoinPeerSession = () => {
-  const [availablePeer, setAvailablePeer] = useState(peerStore.peer);
-  const [currentPlayers, setCurrentPlayers] = useState(peerStore.players);
-
-  const submit = useCallback((ev) => {
-    ev.preventDefault();
-
-    const user = ev.currentTarget.elements.namedItem('name').value;
-
-    setCurrentPlayers([...currentPlayers, user]);
-    setAvailablePeer(new PeerJs());
-  }, []);
+const JoinPeerSession = (props) => {
+  const navigator = useNavigate();
+  const { id } = useParams();
+  const [peer, setPeer] = usePeerStore((state) => [state.peer, state.setPeer], shallow);
+  const setConnection = usePeerStore((state) => state.setConnection);
 
   useEffect(() => {
-    // apply the local peer to the global variables
-    peerStore.peer = availablePeer;
-  }, [availablePeer]);
+    if (!peer) {
+      setPeer(new PeerJs());
+    }
+  }, [peer]);
+
+  const connectToGamePeer = useCallback(
+    (ev) => {
+      ev.preventDefault();
+      if (peer) {
+        setConnection(peer.connect(id, { reliable: true }));
+      }
+    },
+    [peer]
+  );
 
   return (
-    <Form onSubmit={submit}>
-      <Form.Group className="mb-3" controlId="userName">
-        <Form.Label>User Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter User Name" name="name" required />
-      </Form.Group>
+    <Form onSubmit={connectToGamePeer}>
       <Button variant="primary" type="submit">
-        Start Session
+        Join Session
       </Button>
     </Form>
   );

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 
 // State provider
-import peerStore from '../components/peerConnection/peerStore';
+import { usePeerStore } from './peerConnection/peerStore';
 
 const mapChildrenToElements = (children) => {
   return Children.map(children, (child) => {
@@ -37,8 +37,8 @@ const getStyles = (connected) => {
  * The base page for all views
  * @returns {JSX}
  */
-const PageBase = ({ children }) => {
-  const [connected] = useState(peerStore.connection !== null);
+const GamePageBase = ({ children }) => {
+  const connected = usePeerStore((state) => state.connection !== null);
   return (
     <div style={getStyles(connected)}>
       <Container fluid>{mapChildrenToElements(children)}</Container>
@@ -46,8 +46,8 @@ const PageBase = ({ children }) => {
   );
 };
 
-PageBase.propTypes = {
+GamePageBase.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
 };
 
-export default PageBase;
+export default GamePageBase;
