@@ -11,9 +11,9 @@ const ControllerPeer = () => {
   const connection = usePeerStore((state) => state.connection);
 
   const loadConnectionUI = () => {
-    if (connection) {
-      return <Controller />;
-    }
+    // if (connection) {
+    //   return <Controller />;
+    // }
     return <JoinPeerSession />;
   };
 

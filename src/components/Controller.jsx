@@ -12,19 +12,74 @@ const Controller = () => {
   );
 
   connection.on('open', () => {
-    if (window.DeviceOrientationEvent) {
-      alert('DeviceOrientationEvent is supported');
-      window.addEventListener('deviceorientation', (event) => handleOrientationEvent(event));
+    if (
+      typeof DeviceOrientationEvent !== 'undefined' &&
+      typeof DeviceOrientationEvent.requestPermission === 'function'
+    ) {
+      // (optional) Do something before API request prompt.
+      alert('Please allow access to your device orientation');
+      DeviceOrientationEvent.requestPermission()
+        .then((response) => {
+          // (optional) Do something after API prompt dismissed.
+          if (response == 'granted') {
+            window.addEventListener('deviceorientation', (e) => {
+              alert('deviceorientation event 1');
+              handleOrientationEvent(event);
+            });
+          }
+        })
+        .catch((error) => alert(error));
     } else {
-      alert("Sorry, your browser doesn't support Device Orientation");
+      alert('DeviceOrientationEvent is not defined');
     }
 
-    if (window.DeviceMotionEvent) {
-      alert('DeviceMotionEvent is supported');
-      window.addEventListener('devicemotion', (event) => handleMotionEvent(event));
+    if (
+      typeof DeviceMotionEvent !== 'undefined' &&
+      typeof DeviceMotionEvent.requestPermission === 'function'
+    ) {
+      // (optional) Do something before API request prompt.
+      alert('Please allow access to your device motion');
+      DeviceMotionEvent.requestPermission()
+        .then((response) => {
+          // (optional) Do something after API prompt dismissed.
+          if (response == 'granted') {
+            window.addEventListener('devicemotion', (e) => {
+              alert('devicemotion event 1');
+              handleMotionEvent(event);
+            });
+          }
+        })
+        .catch((error) => alert(error));
     } else {
-      alert("Sorry, your browser doesn't support Device Motion");
+      alert('DeviceMotionEvent is not defined');
     }
+    // if (window.DeviceOrientationEvent) {
+    //   alert('DeviceOrientationEvent is supported');
+    //   window.addEventListener('deviceorientation', (event) => {
+    //     alert('deviceorientation event 1');
+    //     handleOrientationEvent(event);
+    //   });
+    //   window.ondeviceorientation = (event) => {
+    //     alert('ondeviceorientation event 2');
+    //     handleOrientationEvent(event);
+    //   };
+    // } else {
+    //   alert("Sorry, your browser doesn't support Device Orientation");
+    // }
+
+    // if (window.DeviceMotionEvent) {
+    //   alert('DeviceMotionEvent is supported');
+    //   window.addEventListener('devicemotion', (event) => {
+    //     alert('devicemotion event 1');
+    //     handleMotionEvent(event);
+    //   });
+    //   window.ondevicemotion = (event) => {
+    //     alert('ondevicemotion event 2');
+    //     handleMotionEvent(event);
+    //   };
+    // } else {
+    //   alert("Sorry, your browser doesn't support Device Motion");
+    // }
 
     const handleOrientationEvent = (event) => {
       alert('DeviceOrientationEvent!');

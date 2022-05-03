@@ -29,7 +29,6 @@ const PeerSession = () => {
     setConnection(conn);
     conn.on('data', (data) => {
       console.log(data);
-      //alert(data);
     });
   });
 
