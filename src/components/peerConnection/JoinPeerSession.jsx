@@ -5,6 +5,7 @@ import PeerJs from 'peerjs';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { usePeerStore } from './peerStore';
 import shallow from 'zustand/shallow';
@@ -32,11 +33,17 @@ const JoinPeerSession = () => {
   );
 
   return (
-    <Form onSubmit={connectToGamePeer}>
-      <Button variant="primary" type="submit">
-        Join Session
-      </Button>
-    </Form>
+    <>
+      {peer ? (
+        <Form onSubmit={connectToGamePeer}>
+          <Button variant="primary" type="submit">
+            Join Session
+          </Button>
+        </Form>
+      ) : (
+        <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+      )}
+    </>
   );
 };
 

@@ -28,16 +28,16 @@ const Controller = () => {
 
     const handleOrientationEvent = (event) => {
       alert('DeviceOrientationEvent!');
-      const data = new deviceOrientationData(event);
-      //connection.send('handleOrientationEvent');
-      connection.send(JSON.stringify(data));
+      //const data = new deviceOrientationData(event);
+      connection.send('handleOrientationEvent');
+      //connection.send(JSON.stringify(data));
     };
 
     const handleMotionEvent = (event) => {
       alert('DeviceMotionEvent!');
-      const data = new deviceMotionData(event);
-      //connection.send('handleMotionEvent');
-      connection.send(JSON.stringify(data));
+      //const data = new deviceMotionData(event);
+      connection.send('handleMotionEvent');
+      //connection.send(JSON.stringify(data));
     };
   });
 
