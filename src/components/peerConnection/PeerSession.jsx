@@ -28,7 +28,8 @@ const PeerSession = () => {
   peer.on('connection', (conn) => {
     setConnection(conn);
     conn.on('data', (data) => {
-      alert(data);
+      console.log(data);
+      //alert(data);
     });
   });
 
