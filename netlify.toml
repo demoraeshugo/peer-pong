@@ -15,3 +15,9 @@
 
   # Default build command.
   command = "CI=false npm run build"
+
+  [[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
