@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { SpotLight } from '@react-three/drei';
 import {
   useCompoundBody,

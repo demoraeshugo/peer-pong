@@ -1,11 +1,8 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import shallow from 'zustand/shallow';
 
-import Header from '../Header';
-import HowTo from '../HowTo';
 import StartPeerSession from './StartPeerSession';
-import JoinPeerSession from './JoinPeerSession';
 import PeerSession from './PeerSession';
 import { usePeerStore } from './peerStore';
 

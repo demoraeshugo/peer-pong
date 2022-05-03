@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
 import shallow from 'zustand/shallow';
 import QRCode from 'react-qr-code';
 

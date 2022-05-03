@@ -1,8 +1,8 @@
 import create from 'zustand';
 
-const usePeerStore = create((set, get) => ({
+const usePeerStore = create((set) => ({
   id: null,
-  setId: (id) => set((state) => ({ id })),
+  setId: (id) => set(() => ({ id })),
   peer: null,
   setPeer: (peer) => {
     set({ peer });

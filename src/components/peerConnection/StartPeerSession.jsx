@@ -1,5 +1,5 @@
-import { useEffect, useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 import PeerJs from 'peerjs';
 
@@ -11,7 +11,7 @@ import { usePeerStore } from './peerStore';
 import shallow from 'zustand/shallow';
 
 const StartPeerSession = () => {
-  const navigator = useNavigate();
+  // const navigator = useNavigate();
 
   const [loading, setLoading] = useState(false);
 

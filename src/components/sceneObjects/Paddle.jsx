@@ -1,7 +1,7 @@
-import { Physics, useBox, usePlane, useSphere } from '@react-three/cannon';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { useBox } from '@react-three/cannon';
+import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
-import { Suspense, useRef } from 'react';
+import { useRef } from 'react';
 import lerp from 'lerp';
 
 import Score from './Score';
