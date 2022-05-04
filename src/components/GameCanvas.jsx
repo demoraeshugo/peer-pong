@@ -2,7 +2,7 @@ import { Suspense, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Canvas } from '@react-three/fiber';
 import { MeshReflectorMaterial } from '@react-three/drei';
-import { Physics, usePlane, Debug } from '@react-three/cannon';
+import { Physics, usePlane } from '@react-three/cannon';
 
 import { Lamp } from './sceneObjects/Furniture';
 import Ball from './sceneObjects/Ball';
@@ -83,15 +83,13 @@ const GameCanvas = () => {
           }}
           gravity={[0, -40, 0]}
           allowSleep={false}>
-          <Debug>
+          <Suspense fallback={null}>
+            <Floor position={[0, -5, 0]} rotation={[-Math.PI / 2, 0, 0]} />
+            {!welcome && <Ball />}
             <Suspense fallback={null}>
-              <Floor position={[0, -5, 0]} rotation={[-Math.PI / 2, 0, 0]} />
-              {!welcome && <Ball />}
-              <Suspense fallback={null}>
-                <Paddle />
-              </Suspense>
+              <Paddle />
             </Suspense>
-          </Debug>
+          </Suspense>
         </Physics>
       </Canvas>
     </div>

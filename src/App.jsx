@@ -12,7 +12,6 @@ const App = () => {
         <Route path="/" element={<GameView />} />
         <Route path="game/session/:id" element={<GameView />} />
         <Route path="controller/session/:id" element={<ControllerView />} />
-        <Route path="game/test" element={<GameCanvas />} />
       </Routes>
     </BrowserRouter>
   );
