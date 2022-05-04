@@ -30,8 +30,8 @@ const Paddle = () => {
     api.position.set(controller.position.x * 10, controller.position.y * 5, 0);
     api.rotation.set(0, 0, values.current[1]);
     if (!model.current) return;
-    model.current.rotation.x = lerp(controller.rotation.x, welcome ? Math.PI / 2 : 0, 0.2);
-    model.current.rotation.y = lerp(controller.rotation.x, 0, 0.2); //values.current[0];
+    model.current.rotation.x = lerp(model.current.rotatio.x, welcome ? Math.PI / 2 : 0, 0.2);
+    model.current.rotation.y = values.current[0];
     console.log(controller.rotation);
     console.log(controller.position);
     console.log(values.current);
