@@ -1,7 +1,5 @@
-import { Children, useState } from 'react';
+import { Children } from 'react';
 import Container from 'react-bootstrap/Container';
-
-const styles = {};
 
 const mapChildrenToElements = (children) => {
   return Children.map(children, (child) => {

@@ -9,7 +9,6 @@ import { useGameStore } from '../gameStore';
 
 const Paddle = () => {
   const { nodes, materials } = useGLTF('/paddle.glb');
-  const [controller] = useGameStore((state) => [state.controller]);
   const { pong } = useGameStore((state) => state.api);
   const welcome = useGameStore((state) => state.welcome);
   const count = useGameStore((state) => state.count);
@@ -24,16 +23,25 @@ const Paddle = () => {
   );
   const values = useRef([0, 0]);
 
-  useFrame((state) => {
-    values.current[0] = lerp(values.current[0], (controller.position.x * Math.PI) / 5, 0.2);
-    values.current[1] = lerp(values.current[1], (controller.position.x * Math.PI) / 5, 0.2);
-    api.position.set(controller.position.x * 10, controller.position.y * 5, 0);
+  useFrame(() => {
+    const controller = useGameStore((state) => state.controller);
+    const new_x = controller.velocity.x > 0 ? values.current[0] + 3 : values.current[0] - 3;
+    const speed_x = Math.abs(controller.velocity.x);
+    const new_y = controller.velocity.y > 0 ? values.current[1] + 3 : values.current[1] - 3;
+
+    values.current[0] = lerp(values.current[0], (new_x * Math.PI) / 5, speed_x);
+    values.current[1] = lerp(values.current[1], (new_x * Math.PI) / 5, speed_x);
+
+    api.position.set(new_x * 10, new_y * 5, 0);
     api.rotation.set(0, 0, values.current[1]);
+
     if (!model.current) return;
+
     model.current.rotation.x = lerp(model.current.rotation.x, welcome ? Math.PI / 2 : 0, 0.2);
     model.current.rotation.y = values.current[0];
+
     console.log(controller.rotation);
-    console.log(controller.position);
+    console.log(controller.velocity);
     console.log(values.current);
     console.log(model.current.rotation);
   });

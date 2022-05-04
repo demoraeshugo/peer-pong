@@ -3,23 +3,11 @@ import PropTypes from 'prop-types';
 import { Canvas } from '@react-three/fiber';
 import { MeshReflectorMaterial } from '@react-three/drei';
 import { Physics, usePlane, Debug } from '@react-three/cannon';
-import clamp from 'lodash-es/clamp';
 
-import { Cursor } from './helpers/Drag';
-import Guy from './sceneObjects/Guy';
-import { Chair, Table, Lamp } from './sceneObjects/Furniture';
+import { Lamp } from './sceneObjects/Furniture';
 import Ball from './sceneObjects/Ball';
 import Paddle from './sceneObjects/Paddle';
 import { useGameStore } from './gameStore';
-
-const style = (welcome) => ({
-  color: 'white',
-  display: welcome ? 'block' : 'none',
-  fontSize: '1.2em',
-  left: 50,
-  position: 'absolute',
-  top: 50
-});
 
 const Floor = (props) => {
   const { reset } = useGameStore((state) => state.api);
@@ -107,7 +95,6 @@ const GameCanvas = () => {
           </Debug>
         </Physics>
       </Canvas>
-      {/* <div style={style(welcome)}>* click anywhere to start</div> */}
     </div>
   );
 };

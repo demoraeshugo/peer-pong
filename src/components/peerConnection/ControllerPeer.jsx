@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PeerJs from 'peerjs';
 
@@ -20,7 +20,6 @@ const ControllerPeer = () => {
   );
 
   const handleOrientationEvent = (event) => {
-    //const data = new deviceOrientationData(event);
     if (connection) {
       const payload = {
         type: event.type,
@@ -33,7 +32,6 @@ const ControllerPeer = () => {
   };
 
   const handleMotionEvent = (event) => {
-    //const data = new deviceMotionData(event);
     if (connection) {
       const payload = {
         type: event.type,
@@ -52,7 +50,6 @@ const ControllerPeer = () => {
         x: event.clientX,
         y: event.clientY
       };
-      // conn.send('windowClick');
       connection.send(payload);
     }
   };
@@ -68,7 +65,7 @@ const ControllerPeer = () => {
           // (optional) Do something after API prompt dismissed.
           if (response == 'granted') {
             window.addEventListener('deviceorientation', (e) => {
-              handleOrientationEvent(event);
+              handleOrientationEvent(e);
             });
           }
         })
@@ -78,7 +75,7 @@ const ControllerPeer = () => {
     }
   };
 
-  const requestDeviceMotion = async (conn) => {
+  const requestDeviceMotion = async () => {
     if (
       typeof DeviceMotionEvent !== 'undefined' &&
       typeof DeviceMotionEvent.requestPermission === 'function'
@@ -89,7 +86,7 @@ const ControllerPeer = () => {
           // (optional) Do something after API prompt dismissed.
           if (response == 'granted') {
             window.addEventListener('devicemotion', (e) => {
-              handleMotionEvent(event, conn);
+              handleMotionEvent(e);
             });
           }
         })
@@ -110,8 +107,7 @@ const ControllerPeer = () => {
   useEffect(() => {
     if (peer) {
       const conn = peer.connect(id, { reliable: true });
-      conn.on('open', async () => {
-        alert('connected');
+      conn.on('open', () => {
         setConnection(conn);
       });
     }
@@ -120,7 +116,7 @@ const ControllerPeer = () => {
   useEffect(() => {
     if (!peer) {
       const newPeer = new PeerJs();
-      newPeer.on('open', (id) => {
+      newPeer.on('open', () => {
         setPeer(newPeer);
       });
     }

@@ -5,7 +5,7 @@ import clamp from 'lodash-es/clamp';
 const ping = new Audio('/ping.mp3');
 ping.setAttribute('crossOrigin', 'anonymous');
 
-const useGameStore = create((set, get) => {
+const useGameStore = create((set) => {
   return {
     api: {
       pong: (velocity) => {
@@ -25,10 +25,11 @@ const useGameStore = create((set, get) => {
         y: 0,
         z: 0
       },
-      position: {
+      velocity: {
         // devicemotion
         x: 0,
-        y: 0
+        y: 0,
+        z: 0
       },
       mouse: {
         x: 0,
@@ -41,10 +42,10 @@ const useGameStore = create((set, get) => {
           state.controller.rotation = rotation;
         })
       ),
-    setControllerPosition: (position) =>
+    setControllerVelocity: (velocity) =>
       set(
         produce((state) => {
-          state.controller.position = position;
+          state.controller.velocity = velocity;
         })
       ),
     setControllerMouse: (mouse) =>
