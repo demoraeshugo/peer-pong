@@ -24,7 +24,7 @@ const Paddle = () => {
   const values = useRef([0, 0]);
 
   useFrame(() => {
-    const controller = useGameStore((state) => state.controller);
+    const controller = useGameStore.getState().controller;
     const new_x = controller.velocity.x > 0 ? values.current[0] + 3 : values.current[0] - 3;
     const speed_x = Math.abs(controller.velocity.x);
     const new_y = controller.velocity.y > 0 ? values.current[1] + 3 : values.current[1] - 3;
