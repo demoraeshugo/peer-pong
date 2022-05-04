@@ -25,9 +25,19 @@ const Paddle = () => {
 
   useFrame(() => {
     const controller = useGameStore.getState().controller;
-    const new_x = controller.velocity.x > 0 ? values.current[0] + 3 : values.current[0] - 3;
+    const new_x =
+      controller.velocity.x === 0
+        ? 0
+        : controller.velocity.x > 0
+        ? values.current[0] + 3
+        : values.current[0] - 3;
     const speed_x = Math.abs(controller.velocity.x);
-    const new_y = controller.velocity.y > 0 ? values.current[1] + 3 : values.current[1] - 3;
+    const new_y =
+      controller.velocity.y === 0
+        ? 0
+        : controller.velocity.y > 0
+        ? values.current[1] + 3
+        : values.current[1] - 3;
 
     values.current[0] = lerp(values.current[0], (new_x * Math.PI) / 5, speed_x);
     values.current[1] = lerp(values.current[1], (new_x * Math.PI) / 5, speed_x);

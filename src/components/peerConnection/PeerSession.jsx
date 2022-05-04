@@ -7,7 +7,7 @@ import { useGameStore } from '../gameStore';
 
 const PeerSession = () => {
   const [setControllerRotation, setControllerVelocity, setControllerMouse] = useGameStore(
-    (state) => [state.setControllerRotation, state.setControllerPosition, state.setControllerMouse],
+    (state) => [state.setControllerRotation, state.setControllerVelocity, state.setControllerMouse],
     shallow
   );
   const welcome = useGameStore((state) => state.welcome);
