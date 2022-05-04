@@ -47,13 +47,14 @@ const PeerSession = () => {
             case 'deviceorientation':
               // setControllerRotation({ x: data.x, y: data.y });
               break;
-            case 'devicemotion':
+            case 'devicemotion': {
               const x = data.x * 5;
               const y = data.y * 5;
-              if(Math.abs(x) > 5 || Math.abs(y) > 5) {
+              if (Math.abs(x) > 5 || Math.abs(y) > 5) {
                 setControllerPosition({ x: data.x, y: data.y, z: data.z });
               }
               break;
+            }
             default:
               console.log(data);
           }
