@@ -55,6 +55,8 @@
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
-    "*.js": ["lint:fix", "format"] 
+    "*.js*": [
+      "npm run format"
+    ]
   }
 }

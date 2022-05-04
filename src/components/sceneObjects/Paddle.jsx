@@ -30,8 +30,8 @@ const Paddle = () => {
       controller.velocity.x === 0
         ? 0
         : controller.velocity.x > 0
-        ? mappedPosition.current[0] + .01
-        : mappedPosition.current[0] - .01;
+        ? mappedPosition.current[0] + 0.01
+        : mappedPosition.current[0] - 0.01;
     mappedPosition.current[1] =
       controller.velocity.y === 0
         ? 0
