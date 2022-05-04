@@ -42,15 +42,12 @@ const PeerSession = () => {
           }
           switch (data.type) {
             case 'click':
-              console.log('windowClick', data);
               setControllerMouse({ x: data.x, y: data.y });
               break;
             case 'deviceOrientation':
-              console.log('deviceOrientation', data);
               setControllerRotation({ x: data.x, y: data.y });
               break;
             case 'deviceMotion':
-              console.log('deviceMotion', data);
               setControllerPosition({ x: data.x, y: data.y, z: data.z });
               break;
             default:

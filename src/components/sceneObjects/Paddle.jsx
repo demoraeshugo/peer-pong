@@ -25,7 +25,6 @@ const Paddle = () => {
   const values = useRef([0, 0]);
 
   useFrame((state) => {
-    console.log(controller.mouse);
     values.current[0] = lerp(values.current[0], (controller.position.x * Math.PI) / 5, 0.2);
     values.current[1] = lerp(values.current[1], (controller.position.x * Math.PI) / 5, 0.2);
     api.position.set(controller.position.x * 10, controller.position.y * 5, 0);
@@ -33,6 +32,10 @@ const Paddle = () => {
     if (!model.current) return;
     model.current.rotation.x = lerp(controller.rotation.x, welcome ? Math.PI / 2 : 0, 0.2);
     model.current.rotation.y = lerp(controller.rotation.x, 0, 0.2); //values.current[0];
+    console.log(controller.rotation)
+    console.log(controller.position)
+    console.log(values.current)
+    console.log(model.current.rotation)
   });
 
   return (
