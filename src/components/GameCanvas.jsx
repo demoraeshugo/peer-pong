@@ -63,7 +63,6 @@ const GameCanvas = () => {
           near: 1,
           far: 100
         }}
-        onPointerMissed={() => welcome && reset(false)}>
         <color attach="background" args={['#171720']} />
         <fog attach="fog" args={['#171720', 60, 90]} />
         <ambientLight intensity={0.2} />

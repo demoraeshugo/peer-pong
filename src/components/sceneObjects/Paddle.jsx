@@ -29,14 +29,14 @@ const Paddle = () => {
       controller.velocity.x === 0
         ? 0
         : controller.velocity.x > 0
-        ? values.current[0] + 3
-        : values.current[0] - 3;
+        ? values.current[0] + 0.01
+        : values.current[0] - 0.01;
     const new_y =
       controller.velocity.y === 0
         ? 0
         : controller.velocity.y > 0
-        ? values.current[1] + 3
-        : values.current[1] - 3;
+        ? values.current[1] + 0.01
+        : values.current[1] - 0.01;
 
     values.current[0] = lerp(values.current[0], (new_x * Math.PI) / 5, 0.2);
     values.current[1] = lerp(values.current[1], (new_x * Math.PI) / 5, 0.2);
