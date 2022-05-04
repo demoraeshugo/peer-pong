@@ -18,19 +18,17 @@ const divStyle = {
   width: '100vw',
   height: '100vh',
   display: 'block',
-  // position: 'absolute',
-  // left: '0px',
   backgroundColor: 'black',
   color: 'white',
   zIndex: 1
 };
 
 const containerStyle = {
-  width: '55vw',
+  width: '90vw',
   height: 'fit-content',
   marginLeft: 'auto',
   marginRight: 'auto',
-  paddingTop: 'auto',
+  paddingTop: '15%',
   paddingBottom: 'auto',
   textAlign: 'center'
 };

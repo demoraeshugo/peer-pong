@@ -65,7 +65,6 @@ const PeerSession = () => {
           <h2>Current Session</h2>
           <p>{player} is here!</p>
           <p>Waiting for mobile connection {loading}</p>
-          <a href={url}>{url}</a>
           <QRCode value={url} size={200} />
         </>
       ) : null}

@@ -7,7 +7,7 @@ const ControllerView = () => {
   return (
     <ControllerPageBase>
       <Header />
-      <HowTo />
+      <HowTo isController={true} />
       <ControllerPeer />
     </ControllerPageBase>
   );
