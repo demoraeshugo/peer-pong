@@ -32,10 +32,10 @@ const Paddle = () => {
     if (!model.current) return;
     model.current.rotation.x = lerp(controller.rotation.x, welcome ? Math.PI / 2 : 0, 0.2);
     model.current.rotation.y = lerp(controller.rotation.x, 0, 0.2); //values.current[0];
-    console.log(controller.rotation)
-    console.log(controller.position)
-    console.log(values.current)
-    console.log(model.current.rotation)
+    console.log(controller.rotation);
+    console.log(controller.position);
+    console.log(values.current);
+    console.log(model.current.rotation);
   });
 
   return (
