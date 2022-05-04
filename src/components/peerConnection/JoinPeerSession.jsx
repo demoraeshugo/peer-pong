@@ -1,7 +1,5 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-import PeerJs from 'peerjs';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -11,39 +9,41 @@ import { usePeerStore } from './peerStore';
 import shallow from 'zustand/shallow';
 
 const JoinPeerSession = () => {
-  // const navigator = useNavigate();
   const { id } = useParams();
   const [peer, setPeer] = usePeerStore((state) => [state.peer, state.setPeer], shallow);
   const [connection, setConnection] = usePeerStore(
     (state) => [state.connection, state.setConnection],
     shallow
   );
+  const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    if (!peer) {
-      setPeer(new PeerJs());
-    }
-  }, [peer]);
-
-  const handleOrientationEvent = (event) => {
-    alert('DeviceOrientationEvent!');
+  const handleOrientationEvent = (event, conn) => {
     //const data = new deviceOrientationData(event);
     if (connection) {
-      connection.send('handleOrientationEvent');
+      connection.send(event);
     }
-    //connection.send(JSON.stringify(data));
   };
 
-  const handleMotionEvent = (event) => {
-    alert('DeviceMotionEvent!');
+  const handleMotionEvent = (event, conn) => {
     //const data = new deviceMotionData(event);
     if (connection) {
-      connection.send('handleMotionEvent');
+      connection.send(event);
     }
-    //connection.send(JSON.stringify(data));
   };
 
-  const requestDeviceOrientation = async () => {
+  const windowClickHandler = (event, conn) => {
+    if (connection) {
+      const payload = {
+        type: 'windowClick',
+        x: event.clientX,
+        y: event.clientY
+      };
+      // conn.send('windowClick');
+      connection.send(payload);
+    }
+  };
+
+  const requestDeviceOrientation = async (conn) => {
     if (
       typeof DeviceOrientationEvent !== 'undefined' &&
       typeof DeviceOrientationEvent.requestPermission === 'function'
@@ -54,8 +54,7 @@ const JoinPeerSession = () => {
           // (optional) Do something after API prompt dismissed.
           if (response == 'granted') {
             window.addEventListener('deviceorientation', (e) => {
-              alert('deviceorientation event 1');
-              handleOrientationEvent(event);
+              handleOrientationEvent(event, conn);
             });
           }
         })
@@ -65,7 +64,7 @@ const JoinPeerSession = () => {
     }
   };
 
-  const requestDeviceMotion = async () => {
+  const requestDeviceMotion = async (conn) => {
     if (
       typeof DeviceMotionEvent !== 'undefined' &&
       typeof DeviceMotionEvent.requestPermission === 'function'
@@ -76,8 +75,7 @@ const JoinPeerSession = () => {
           // (optional) Do something after API prompt dismissed.
           if (response == 'granted') {
             window.addEventListener('devicemotion', (e) => {
-              alert('devicemotion event 1');
-              handleMotionEvent(event);
+              handleMotionEvent(event, conn);
             });
           }
         })
@@ -89,16 +87,24 @@ const JoinPeerSession = () => {
 
   const connectToGamePeer = async (ev) => {
     ev.preventDefault();
-    await requestDeviceOrientation();
-    await requestDeviceMotion();
-    if (peer) {
-      setConnection(peer.connect(id, { reliable: true }));
-    }
+    window.addEventListener('click', (e) => windowClickHandler(e, null));
+    await requestDeviceOrientation(null);
+    await requestDeviceMotion(null);
+    setSubmitted(true);
   };
+
+  useEffect(() => {
+    if (peer) {
+      const conn = peer.connect(id, { reliable: true });
+      conn.on('open', async () => {
+        setConnection(conn);
+      });
+    }
+  }, [peer]);
 
   return (
     <>
-      {connection ? null : peer ? (
+      {submitted ? null : connection ? (
         <Form onSubmit={connectToGamePeer}>
           <Button variant="primary" type="submit">
             Join Session

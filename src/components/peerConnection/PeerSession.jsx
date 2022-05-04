@@ -25,12 +25,18 @@ const PeerSession = () => {
     }
   }, [loading, connection]);
 
-  peer.on('connection', (conn) => {
-    setConnection(conn);
-    conn.on('data', (data) => {
-      console.log(data);
-    });
-  });
+  useEffect(() => {
+    if (peer) {
+      peer.on('connection', (conn) => {
+        setConnection(conn);
+        conn.on('data', (data) => {
+          console.log('data');
+          console.log(data);
+          console.log(typeof data);
+        });
+      });
+    }
+  }, [peer]);
 
   return (
     <>

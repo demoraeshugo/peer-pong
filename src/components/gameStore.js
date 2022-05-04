@@ -16,7 +16,20 @@ const useGameStore = create((set, get) => {
       reset: (welcome) => set((state) => ({ count: welcome ? state.count : 0, welcome }))
     },
     count: 0,
-    welcome: true
+    welcome: true,
+    controller: {
+      rotation: {
+        // deviceorientation
+        x: 0,
+        y: 0,
+        z: 0
+      },
+      position: {
+        // devicemotion
+        x: 0,
+        y: 0
+      }
+    }
   };
 });
 
