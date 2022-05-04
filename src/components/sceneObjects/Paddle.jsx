@@ -22,26 +22,27 @@ const Paddle = () => {
     useRef(null)
   );
   const values = useRef([0, 0]);
+  const mappedPosition = useRef([0, 0]);
 
   useFrame(() => {
     const controller = useGameStore.getState().controller;
-    const new_x =
+    mappedPosition.current[0] =
       controller.velocity.x === 0
         ? 0
         : controller.velocity.x > 0
-        ? values.current[0] + 0.1
-        : values.current[0] - 0.1;
-    const new_y =
+        ? mappedPosition.current[0] + 1
+        : mappedPosition.current[0] - 1;
+    mappedPosition.current[1] =
       controller.velocity.y === 0
         ? 0
         : controller.velocity.y > 0
-        ? values.current[1] + 0.1
-        : values.current[1] - 0.1;
+        ? values.current[1] + 1
+        : values.current[1] - 1;
 
-    values.current[0] = lerp(values.current[0], (new_x * Math.PI) / 5, 0.2);
-    values.current[1] = lerp(values.current[1], (new_x * Math.PI) / 5, 0.2);
+    values.current[0] = lerp(values.current[0], (mappedPosition.current[0] * Math.PI) / 5, 0.2);
+    values.current[1] = lerp(values.current[1], (mappedPosition.current[0] * Math.PI) / 5, 0.2);
 
-    api.position.set(new_x * 10, new_y * 5, 0);
+    api.position.set(mappedPosition.current[0] * 10, mappedPosition.current[1] * 5, 0);
     api.rotation.set(0, 0, values.current[1]);
 
     if (!model.current) return;
