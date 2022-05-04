@@ -44,10 +44,10 @@ const PeerSession = () => {
             case 'click':
               setControllerMouse({ x: data.x, y: data.y });
               break;
-            case 'deviceOrientation':
+            case 'deviceorientation':
               setControllerRotation({ x: data.x, y: data.y });
               break;
-            case 'deviceMotion':
+            case 'devicemotion':
               setControllerPosition({ x: data.x, y: data.y, z: data.z });
               break;
             default:
