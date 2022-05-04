@@ -31,7 +31,6 @@ const Paddle = () => {
         : controller.velocity.x > 0
         ? values.current[0] + 3
         : values.current[0] - 3;
-    const speed_x = Math.abs(controller.velocity.x);
     const new_y =
       controller.velocity.y === 0
         ? 0
@@ -39,8 +38,8 @@ const Paddle = () => {
         ? values.current[1] + 3
         : values.current[1] - 3;
 
-    values.current[0] = lerp(values.current[0], (new_x * Math.PI) / 5, speed_x);
-    values.current[1] = lerp(values.current[1], (new_x * Math.PI) / 5, speed_x);
+    values.current[0] = lerp(values.current[0], (new_x * Math.PI) / 5, 0.2);
+    values.current[1] = lerp(values.current[1], (new_x * Math.PI) / 5, 0.2);
 
     api.position.set(new_x * 10, new_y * 5, 0);
     api.rotation.set(0, 0, values.current[1]);
