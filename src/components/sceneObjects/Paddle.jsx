@@ -9,8 +9,8 @@ import { useGameStore } from '../gameStore';
 
 const Paddle = () => {
   const { nodes, materials } = useGLTF('/paddle.glb');
+  const [controller] = useGameStore((state) => [state.controller]);
   const { pong } = useGameStore((state) => state.api);
-  //pong(0);
   const welcome = useGameStore((state) => state.welcome);
   const count = useGameStore((state) => state.count);
   const model = useRef(null);
@@ -25,13 +25,14 @@ const Paddle = () => {
   const values = useRef([0, 0]);
 
   useFrame((state) => {
-    values.current[0] = lerp(values.current[0], (state.mouse.x * Math.PI) / 5, 0.2);
-    values.current[1] = lerp(values.current[1], (state.mouse.x * Math.PI) / 5, 0.2);
-    api.position.set(state.mouse.x * 10, state.mouse.y * 5, 0);
+    console.log(controller.mouse);
+    values.current[0] = lerp(values.current[0], (controller.position.x * Math.PI) / 5, 0.2);
+    values.current[1] = lerp(values.current[1], (controller.position.x * Math.PI) / 5, 0.2);
+    api.position.set(controller.position.x * 10, controller.position.y * 5, 0);
     api.rotation.set(0, 0, values.current[1]);
     if (!model.current) return;
-    model.current.rotation.x = lerp(model.current.rotation.x, welcome ? Math.PI / 2 : 0, 0.2);
-    model.current.rotation.y = values.current[0];
+    model.current.rotation.x = lerp(controller.rotation.x, welcome ? Math.PI / 2 : 0, 0.2);
+    model.current.rotation.y = lerp(controller.rotation.x, 0, 0.2); //values.current[0];
   });
 
   return (

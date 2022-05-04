@@ -3,8 +3,16 @@ import shallow from 'zustand/shallow';
 import QRCode from 'react-qr-code';
 
 import { usePeerStore } from './peerStore';
+import { useGameStore } from '../gameStore';
 
 const PeerSession = () => {
+  const [setControllerRotation, setControllerPosition, setControllerMouse] = useGameStore(
+    (state) => [state.setControllerRotation, state.setControllerPosition, state.setControllerMouse],
+    shallow
+  );
+  const welcome = useGameStore((state) => state.welcome);
+  const { reset } = useGameStore((state) => state.api);
+
   const player = usePeerStore((state) => state.player);
   const peer = usePeerStore((state) => state.peer);
   const [connection, setConnection] = usePeerStore(
@@ -13,7 +21,6 @@ const PeerSession = () => {
   );
   const id = usePeerStore((state) => state.id);
   const [loading, setLoading] = useState('');
-
   const url = `${window.location.origin}/controller/session/${id}`;
 
   useEffect(() => {
@@ -30,9 +37,25 @@ const PeerSession = () => {
       peer.on('connection', (conn) => {
         setConnection(conn);
         conn.on('data', (data) => {
-          console.log('data');
-          console.log(data);
-          console.log(typeof data);
+          if (welcome) {
+            reset(false);
+          }
+          switch (data.type) {
+            case 'click':
+              console.log('windowClick', data);
+              setControllerMouse({ x: data.x, y: data.y });
+              break;
+            case 'deviceOrientation':
+              console.log('deviceOrientation', data);
+              setControllerRotation({ x: data.x, y: data.y });
+              break;
+            case 'deviceMotion':
+              console.log('deviceMotion', data);
+              setControllerPosition({ x: data.x, y: data.y, z: data.z });
+              break;
+            default:
+              console.log(data);
+          }
         });
       });
     }

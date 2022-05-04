@@ -19,24 +19,36 @@ const ControllerPeer = () => {
     shallow
   );
 
-  const handleOrientationEvent = (event, conn) => {
+  const handleOrientationEvent = (event) => {
     //const data = new deviceOrientationData(event);
     if (connection) {
-      connection.send(event);
+      const payload = {
+        type: event.type,
+        x: event.alpha,
+        y: event.beta,
+        z: event.gamma
+      };
+      connection.send(payload);
     }
   };
 
-  const handleMotionEvent = (event, conn) => {
+  const handleMotionEvent = (event) => {
     //const data = new deviceMotionData(event);
     if (connection) {
-      connection.send(event);
+      const payload = {
+        type: event.type,
+        x: event.accelerationIncludingGravity.x,
+        y: event.accelerationIncludingGravity.y,
+        z: event.accelerationIncludingGravity.z
+      };
+      connection.send(payload);
     }
   };
 
-  const windowClickHandler = (event, conn) => {
+  const windowClickHandler = (event) => {
     if (connection) {
       const payload = {
-        type: 'windowClick',
+        type: event.type,
         x: event.clientX,
         y: event.clientY
       };
@@ -45,7 +57,7 @@ const ControllerPeer = () => {
     }
   };
 
-  const requestDeviceOrientation = async (conn) => {
+  const requestDeviceOrientation = async () => {
     if (
       typeof DeviceOrientationEvent !== 'undefined' &&
       typeof DeviceOrientationEvent.requestPermission === 'function'
@@ -56,7 +68,7 @@ const ControllerPeer = () => {
           // (optional) Do something after API prompt dismissed.
           if (response == 'granted') {
             window.addEventListener('deviceorientation', (e) => {
-              handleOrientationEvent(event, conn);
+              handleOrientationEvent(event);
             });
           }
         })
@@ -89,9 +101,9 @@ const ControllerPeer = () => {
 
   const connectToGamePeer = async (ev) => {
     ev.preventDefault();
-    window.addEventListener('click', (e) => windowClickHandler(e, null));
-    await requestDeviceOrientation(null);
-    await requestDeviceMotion(null);
+    window.addEventListener('click', (e) => windowClickHandler(e));
+    await requestDeviceOrientation();
+    await requestDeviceMotion();
     setSubmitted(true);
   };
 
