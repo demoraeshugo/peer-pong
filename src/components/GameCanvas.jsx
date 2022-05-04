@@ -62,7 +62,7 @@ const GameCanvas = () => {
           fov: 25,
           near: 1,
           far: 100
-        }}
+        }}>
         <color attach="background" args={['#171720']} />
         <fog attach="fog" args={['#171720', 60, 90]} />
         <ambientLight intensity={0.2} />
